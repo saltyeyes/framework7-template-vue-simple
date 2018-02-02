@@ -27,6 +27,33 @@
       width: 60px;
     }
 
+    .character-card {
+      
+    }
+
+    .character-card-avatar {
+      width: 60px;
+      text-align: center;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .character-card-title {
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .character-card-subtitle {
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .character-card-special {
+      font-size: 13px;
+      color: #757575;
+      margin: 0;
+    }
+
   </style>
 </head>
 <body>
@@ -65,22 +92,27 @@
           </f7-nav-left>
           <f7-nav-title>Betrayal</f7-nav-title>
         </f7-navbar>
-        <f7-card>
-          <f7-card-header>Baldur's Gate Characters:</f7-card-header>
-          <f7-card-content>
-            <betrayal-character-list></betrayal-character-list>
-          </f7-card-content>
-        </f7-card>
+        <f7-block-title>Baldur's Gate Characters:</f7-block-title>
+        <betrayal-character-list></betrayal-character-list>
       </f7-page>
     </f7-view>
   </div>
   
   <template id="character-list">
-    <f7-list media-list>
-      <template v-for="(characters, color) in defaultCharacters">
-        <f7-list-item v-for="character in characters" :title="character.name" :subtitle="character.race + ' ' + character.class" :text="'Special: ' + character.special.name" :media="'img/char-token-'+color+'.png'" :key="character.name"></f7-list-item>
-      </template>
-    </f7-list>
+    <f7-row :no-gap="true">
+      <f7-col width=50 v-for="character in defaultCharacters" :key="character.id">
+        <a :href="'/character/' + character.id">
+          <f7-card>
+            <f7-card-header><img :src="'img/char-token-'+character.color+'.png'" class="character-card-avatar" /></f7-card-header>
+            <f7-card-content>
+              <p class="character-card-title">{{ character.name }}</p>
+              <p class="character-card-subtitle">{{ character.race }} {{ character.class }}</p>
+              <p class="character-card-special">Special: {{ character.special.name }}</p>
+            </f7-card-content>
+          </f7-card>
+        </a>
+      </f7-col>
+    </f7-row>
   </template>
 
   <!-- Page Not Found Template -->
@@ -90,6 +122,15 @@
       <f7-block strong>
         <p>Sorry</p>
         <p>Requested content not found.</p>
+      </f7-block>
+    </f7-page>
+  </template>
+
+  <template id="page-character">
+    <f7-page>
+      <f7-navbar :title="character.name" back-link="Back"></f7-navbar>
+      <f7-block strong>
+        <p></p>
       </f7-block>
     </f7-page>
   </template>
